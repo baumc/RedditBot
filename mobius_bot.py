@@ -6,9 +6,9 @@ from lxml import html
 
 class Mobius_FF_Bot(object):
 	def __init__(self):
-		self.userAgent = 'PRAW:Mobius_FF_Bot:v1 (by /u/Devoto17)'
-		self.username = 'YOURUSERNAME'
-		self.password = 'PASSWORDself.t.weekday().'
+		self.userAgent = 'PRAW:Mobius_FF_Bot:v1.1 (by /u/Devoto17)'
+		self.username = 'YOURINFO'
+		self.password = 'YOURINFO'
 		self.sub = ''
 		#server time - a day so it updates in case its been down for a bit
 		self.t = datetime.now() - timedelta(1)
@@ -73,8 +73,9 @@ class Mobius_FF_Bot(object):
 	def update_events(self):
 		self.sidebar = re.sub(r"EVENTS", self.events, self.sidebar)
 
-print 'MobiusBot Go!'		
+		
 mobiusbot = Mobius_FF_Bot()
+print 'MobiusBot Go!'+ datetime.now()
 
 while(True):
 	print "Starting Check"
@@ -90,7 +91,7 @@ while(True):
 		mobiusbot.t = t
 		mobiusbot.scrape_se_info(r)
 	#else if hour change, scrape data
-	elif (t.strptime(start,"%H").time() == mobius.t.strptime(start,"%H").time()):
+	elif (t.strptime("%H").time() == mobius.t.strptime("%H").time()):
 		print "Hour change!"
 		mobiusbot.t = t
 		mobiusbot.scrape_se_info(r)
