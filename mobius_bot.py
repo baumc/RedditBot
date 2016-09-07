@@ -8,7 +8,7 @@ class Mobius_FF_Bot(object):
 	def __init__(self):
 		self.userAgent = 'PRAW:Mobius_FF_Bot:v1.2 (by /u/Devoto17)'
 		self.username = 'UNAME'
-		self.password = "PASSWORD"
+		self.password = "PWRD"
 		self.sub = ''
 		#server time - a day so it updates in case its been down for a bit
 		self.t = datetime.now() - timedelta(1)
@@ -64,7 +64,7 @@ class Mobius_FF_Bot(object):
 		names = t.xpath('//li[@class="entry"]/a/h4/text()')
 		self.events = ''
 		for l,n in zip(links, names):
-			if "2016/09" in n:
+			if self.t.strftime("%Y/%m") in n:
 				self.events += ">>[**"+n.strip()+"**]("+l+")\n"
 
 	def update_events(self):
@@ -99,6 +99,10 @@ while(True):
 	
 	#save the sidebar
 	mobiusbot.save_sidebar(r)
+
+	#monitor comments
+
+
 	#sunday rage thread
 	#monday archive rage thread
 	print 'Sleeping for 1 minutes'
