@@ -7,8 +7,8 @@ from lxml import html
 class Mobius_FF_Bot(object):
 	def __init__(self):
 		self.userAgent = 'PRAW:Mobius_FF_Bot:v1.1 (by /u/Devoto17)'
-		self.username = 'Devoto17'
-		self.password = "Asdzxc123."
+		self.username = 'UNAME'
+		self.password = "PASSWORD."
 		self.sub = ''
 		#server time - a day so it updates in case its been down for a bit
 		self.t = datetime.now() - timedelta(1)
