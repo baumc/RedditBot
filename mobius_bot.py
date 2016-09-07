@@ -3,11 +3,11 @@ from pprint import pprint
 from datetime import datetime, timedelta
 from time import gmtime,strftime
 from lxml import html
-
+from praw.helpers import comment_stream
 class Mobius_FF_Bot(object):
 	def __init__(self):
 		self.userAgent = 'PRAW:Mobius_FF_Bot:v1.2 (by /u/Devoto17)'
-		self.username = 'UNAME'
+		self.username = 'USER'
 		self.password = "PWRD"
 		self.sub = ''
 		#server time - a day so it updates in case its been down for a bit
@@ -70,8 +70,27 @@ class Mobius_FF_Bot(object):
 	def update_events(self):
 		self.sidebar = re.sub(r"EVENTS", self.events, self.sidebar)
 		
+
+	def monitor_comments(self,r):
+		print "Checking Comments"
+		target_text = "!Echo"
+		response_text = "WHAT?"
+		comments = comment_stream(r, 'echoff')
+		for c in comment_stream(r, 'echoff'):
+			print "Comment"+c.body
+			if c.id not in processed:
+				if target_text in c.body:
+					print "found a comment"
+					c.reply(response_text)
+				processed.append(c.id)
+			else:
+				break
+
 mobiusbot = Mobius_FF_Bot()
 print 'MobiusBot Go!'+ datetime.now().strftime("%b %d, %A %I:%M %p")
+
+#comments
+processed = []
 
 while(True):
 	print "Starting Check"
@@ -101,7 +120,7 @@ while(True):
 	mobiusbot.save_sidebar(r)
 
 	#monitor comments
-
+	#mobiusbot.monitor_comments(r)
 
 	#sunday rage thread
 	#monday archive rage thread
