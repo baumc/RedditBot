@@ -6,9 +6,9 @@ from lxml import html
 
 class Mobius_FF_Bot(object):
 	def __init__(self):
-		self.userAgent = 'PRAW:Mobius_FF_Bot:v1.1 (by /u/Devoto17)'
+		self.userAgent = 'PRAW:Mobius_FF_Bot:v1.2 (by /u/Devoto17)'
 		self.username = 'UNAME'
-		self.password = "PASSWORD."
+		self.password = "PASSWORD"
 		self.sub = ''
 		#server time - a day so it updates in case its been down for a bit
 		self.t = datetime.now() - timedelta(1)
@@ -22,13 +22,10 @@ class Mobius_FF_Bot(object):
 		return r
 	
 	def get_sidebar(self, r):
-		sidebar = self.sub.get_wiki_page("index/edit_sidebar").content_md
-		self.sidebar = sidebar
+		self.sidebar =  self.sub.get_wiki_page("index/edit_sidebar").content_md
 
 	def save_sidebar(self, r):
-		settings = self.sub.get_settings()
-		settings['description'] = self.sidebar
-		settings = (self.sub).update_settings(description=settings['description'])
+		self.sub.edit_wiki_page("config/sidebar", self.sidebar)
 
 	def update_sidebar_servertime(self, r):
 		t = datetime.utcnow() - timedelta(hours=8)
@@ -72,7 +69,6 @@ class Mobius_FF_Bot(object):
 
 	def update_events(self):
 		self.sidebar = re.sub(r"EVENTS", self.events, self.sidebar)
-
 		
 mobiusbot = Mobius_FF_Bot()
 print 'MobiusBot Go!'+ datetime.now().strftime("%b %d, %A %I:%M %p")
@@ -91,7 +87,7 @@ while(True):
 		mobiusbot.t = t
 		mobiusbot.scrape_se_info(r)
 	#else if hour change, scrape data
-	elif (t.strptime("%H").time() == mobius.t.strptime("%H").time()):
+	elif (t.strftime("%H") != mobiusbot.t.strftime("%H")):
 		print "Hour change!"
 		mobiusbot.t = t
 		mobiusbot.scrape_se_info(r)
